@@ -1,11 +1,28 @@
 ﻿var pagePool = new function () {
     var list = [];
 
-    this.addPage = function (name, value) {
-        list[name.toLowerCase()] = value;
+    this.addPage = function (page) {
+
+        this.setPage(page);
+        $("#taskbar").html($("#taskbar").html() + $com.taskHtml);
+
+        $("#taskWrap").attr("id", "task_" + page.bizCode);
+        $("#task_title").attr("id", "task_title_" + page.bizCode);
+        $("#task_closeBtn").attr("id", "task_closeBtn_" + page.bizCode);
+        
+        $("#task_title_" + page.bizCode).html(page.title);
+        $("#task_closeBtn_" + page.bizCode).click(function () {
+            alert(2);
+        });
+        $("#task_" + page.bizCode).click(function () {
+            var bizCode = this.id.replace("task_", "");
+            alert(bizCode);
+//            $ob.showPage(bizCode);
+        });
+
     }
-    this.setPage = function (name, value) {
-        addPage(name,value);
+    this.setPage = function (page) {
+        list[page.bizCode.toLowerCase()] = page;
     }
     this.getPage = function (name) {
         return list[name.toLowerCase()];

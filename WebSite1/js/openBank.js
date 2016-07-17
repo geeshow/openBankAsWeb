@@ -34,7 +34,8 @@ $ob.resetPageData = function (bizCode, data) {
         type    : $ob.getType(bizCode)
       , title   : $ob.getTitle(bizCode)
       , bizCode : bizCode
-      , content : data.replace("contentWrap", bizCode)
+      , content: data.replace("contentWrap", bizCode)
+      , values : []
     }
 }
 $ob.createPage = function (bizCode) {
@@ -49,7 +50,7 @@ $ob.createPage = function (bizCode) {
         , async:false
     }).done(function (data) {
         var newPage = $ob.resetPageData(bizCode, data);
-        pagePool.addPage(bizCode, newPage);
+        pagePool.addPage(newPage);
         $ob.showPage(bizCode);
     });
 }
@@ -59,6 +60,9 @@ $ob.showPage = function (bizCode) {
     var page = pagePool.getPage(bizCode);
     $ob.showingPage = page;
     $("#content").html(page.content);
+    for (var input in page.values) {
+        document.forms["contentForm"][page.values[input].name].value = page.values[input].value;
+    }
 }
 $ob.deletePage = function (bizCode) {
     pagePool.deletePage(bizCode);
@@ -67,9 +71,10 @@ $ob.deletePage = function (bizCode) {
 $ob.saveShowingPage = function () {
     var showingPage = $ob.showingPage;
     if (typeof showingPage.bizCode != "undefined") {
+        $("#contentForm").serializeArray();
         showingPage.content = $("#content").html();
-        alert($("#content").html());
-        pagePool.addPage(showingPage.bizCode, showingPage);
+        showingPage.values = $("#contentForm").serializeArray();
+        pagePool.setPage(showingPage);
     }
 }
 $ob.getType = function (bizCode) {
@@ -77,7 +82,7 @@ $ob.getType = function (bizCode) {
 }
 
 $ob.getTitle = function (bizCode) {
-    return "한글화작업:" + bizCode;
+    return bizCode;
 }
 $(document).ajaxComplete(function () {
     $("#status").text("Triggered ajaxComplete handler.");
