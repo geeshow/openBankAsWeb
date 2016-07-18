@@ -11,6 +11,14 @@ $ob.onload = function () {
             else {
                 $ob.createPage(bizCode);
             }
+
+            var tbarCode = this.id.replace("menu", "tbar");
+            if (pagePool.isPage(tbarCode)) {
+                $ob.showPage(tbarCode);
+            }
+            else {
+                $ob.createPage(tbarCode);
+            }
         })
     }
     catch (e) {
@@ -32,14 +40,13 @@ $ob.getUrl = function (bizCode) {
     }
 
 }
-$ob.resetPageData = function (bizCode, data) {
+$ob.makePageData = function (bizCode, data) {
     try {
-        data.replace(/%bizCode%/gi, bizCode);
         return {
             type: $ob.getType(bizCode)
           , title: $ob.getTitle(bizCode)
           , bizCode: bizCode
-          , content: data
+          , content: data.replace(/%bizCode%/gi, bizCode)
           , values: []
         };
     }
@@ -63,9 +70,11 @@ $ob.createPage = function (bizCode) {
             , data: {}
             , async: false
         }).done(function (data) {
-            var newPage = $ob.resetPageData(bizCode, data);
+            var newPage = $ob.makePageData(bizCode, data);
             pagePool.addPage(newPage);
+            $ob.hidePage();
             $("#content").html($("#content").html() + newPage.content);
+            $ob.showPage(bizCode);
         });
     }
     catch (e) {
@@ -80,19 +89,31 @@ var zindex = 0;
 $ob.showPage = function (bizCode) {
     try {
         $ob.saveShowingPage();
-        var page = pagePool.getPage(bizCode);
-        $ob.showingPage = page;
-        $(".bizPages").css("display", "hidden");
-        $("#" + bizCode).css("display", "block");
+        $ob.hidePage();
+        $("#" + bizCode).show();
+        $ob.showingPage = pagePool.getPage(bizCode);
     }
     catch (e) {
-        log.error("onload", e);
+        log.error("showPage", e);
     }
     finally {
         log.debug("showPage", this);
     }
-
 }
+$ob.hidePage = function () {
+    try {
+        if (typeof $ob.showingPage.bizCode == "string") {
+            $("#" + $ob.showingPage.bizCode).hide();
+        }
+    }
+    catch (e) {
+        log.error("hidePage", e);
+    }
+    finally {
+        log.debug("hidePage", this);
+    }
+}
+
 $ob.deletePage = function (bizCode) {
     try {
         pagePool.deletePage(bizCode);
@@ -171,7 +192,7 @@ var log = new function () {
     }
     this.debug = function (msg, obj) {
         if (this.mode == "debug") {
-            $("#info").append("[" + this.eventCnt + "]" + msg + "<br>");
+            $("#info").append("[" + this.eventCnt + "] " + msg + "<br>");
             $("#info").scrollTop($("#info").scrollTop() + 100);
         }
     }

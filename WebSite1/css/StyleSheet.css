@@ -8,12 +8,21 @@
 
 #menu {width:200px;height:80px;float:left;}
 #main {width:700px;height:100%;float:left;background-color:#ffffff;}
-#info {width:300px;height:100%;float:left;font-family:'Times New Roman', Times, serif;overflow-y:scroll}
+#info {width:300px;height:100%;float:left;font-family:'Times New Roman', Times, serif;overflow-y:scroll;font-size:13px;}
 
 #title {width:100%;height:20px;background-color:#38556b}
 #content {width:100%;height:640px}
 #status {width:100%;height:20px;background-color:#d0d0d0}
-#taskbar {width:100%;height:20px;background-color:#ffffff}
+#tbarArea {width:100%;height:20px;background-color:#ffffff}
+.tbar {
+    float: left;
+    width: 130px;
+    height: 20px;
+    background-color: #364e6f;
+    color: #ffffff;
+    font-size: 9pt;
+}
+.bizPages {border:solid 2px #e0ee28;margin:1px;}
 h1 {
 	font-size: 2em;
 	margin: 0 0 0.33em;

@@ -10,14 +10,12 @@
     <script src="/js/component.js"></script>
     <script>
         function test() {
-            $("#test1").css("border", "solid 1px #ff0000");
-            $("#test1").attr("class", "test");
-            alert($("#test1").html());
+            $("#body").css("display","none");
         }
     </script>
 </head>
 <body onload="$ob.onload()">
-    <div id="head">오픈뱅크</div>
+    <div id="head">오픈뱅크<input type="button" onclick="test()" value="테스트" /></div>
     <div id="body">
         <div id="menu">
             <ol>
@@ -36,7 +34,7 @@
             <div id="title"></div>
             <div id="content"></div>
             <div id="status">aa</div>
-            <div id="taskbar">
+            <div id="tbarArea">
 
             </div>
         </div>
