@@ -8,7 +8,13 @@
     <script src="/js/openBank.js?1"></script>
     <script src="/js/pageManager.js?1"></script>
     <script src="/js/component.js"></script>
-
+    <script>
+        function test() {
+            $("#test1").css("border", "solid 1px #ff0000");
+            $("#test1").attr("class", "test");
+            alert($("#test1").html());
+        }
+    </script>
 </head>
 <body onload="$ob.onload()">
     <div id="head">오픈뱅크</div>
@@ -20,7 +26,7 @@
                 <ol>
                     <li id="menu_bank_dep_001" class="bizTreeMenu"><a href="#">신규</a></li>
                     <li id="menu_bank_dep_002" class="bizTreeMenu"><a href="#">입금</a></li>
-                    <li>출금</li>
+                    <li><a href="javascript:test();">출금</a></li>
                     <li>해지</li>
                 </ol>
                 <li>여신</li>
@@ -29,12 +35,14 @@
         <div id="main">
             <div id="title"></div>
             <div id="content"></div>
-            <div id="status"></div>
+            <div id="status">aa</div>
             <div id="taskbar">
 
             </div>
         </div>
-        <div id="info"></div>
+        <div id="info">
+            
+        </div>
     </div>
     <div id="foot">하단</div>
 </body>

@@ -2,8 +2,8 @@
 }
 $ob.showingPage = {};
 $ob.onload = function () {
-    $(".bizTreeMenu").click(function () {
-        try {
+    try {
+        $(".bizTreeMenu").click(function () {
             var bizCode = this.id.replace("menu", "biz");
             if (pagePool.isPage(bizCode)) {
                 $ob.showPage(bizCode);
@@ -11,77 +11,145 @@ $ob.onload = function () {
             else {
                 $ob.createPage(bizCode);
             }
-        } catch (e) {
-            $ob.errorMsg(e);
-        }
-    })
-}
-$ob.errorMsg = function (e) {
-    $("#info").html(e);
-}
-
-$ob.getUrl = function (bizCode) {
-    return "/" + bizCode.replace(/_/g, '/') + ".html?time=" + (new Date()).getTime();
-}
-$ob.resetPageData = function (bizCode, data) {
-    // body태그 부분까지 삭제처리 하기 위한 로직
-    var startIdx = data.indexOf("<", data.search(/<body/i) + 1);
-    var endIdx = data.search(/<\/body/i);
-    data = data.substring(startIdx, endIdx);
-    
-    // div태그의 contentWrap을 bizCode로 변경하여 고유 id를 가지게 함.
-    return {
-        type    : $ob.getType(bizCode)
-      , title   : $ob.getTitle(bizCode)
-      , bizCode : bizCode
-      , content: data.replace("contentWrap", bizCode)
-      , values : []
+        })
+    }
+    catch (e) {
+        log.error("onload", e);
+    }
+    finally {
+        log.debug("onload", this);
     }
 }
-$ob.createPage = function (bizCode) {
-    if (pagePool.isPage(bizCode))
-        $ob.deletePage(bizCode);
+$ob.getUrl = function (bizCode) {
+    try {
+        return "/" + bizCode.replace(/_/g, '/') + ".html?time=" + (new Date()).getTime();
+    }
+    catch (e) {
+        log.error("onload", e);
+    }
+    finally {
+        log.debug("getUrl", this);
+    }
 
-    var url = $ob.getUrl(bizCode);
-    $.ajax({
-         type:"GET"
-        , url:url
-        , data:{}
-        , async:false
-    }).done(function (data) {
-        var newPage = $ob.resetPageData(bizCode, data);
-        pagePool.addPage(newPage);
-        $ob.showPage(bizCode);
-    });
+}
+$ob.resetPageData = function (bizCode, data) {
+    try {
+        data.replace(/%bizCode%/gi, bizCode);
+        return {
+            type: $ob.getType(bizCode)
+          , title: $ob.getTitle(bizCode)
+          , bizCode: bizCode
+          , content: data
+          , values: []
+        };
+    }
+    catch (e) {
+        log.error("resetPageData", e);
+    }
+    finally {
+        log.debug("resetPageData", this);
+    }
+
+}
+$ob.createPage = function (bizCode) {
+    try {
+        if (pagePool.isPage(bizCode))
+            $ob.deletePage(bizCode);
+
+        var url = $ob.getUrl(bizCode);
+        $.ajax({
+            type: "GET"
+            , url: url
+            , data: {}
+            , async: false
+        }).done(function (data) {
+            var newPage = $ob.resetPageData(bizCode, data);
+            pagePool.addPage(newPage);
+            $("#content").html($("#content").html() + newPage.content);
+        });
+    }
+    catch (e) {
+        log.error("createPage", e);
+    }
+    finally {
+        log.debug("createPage", this);
+    }
+
 }
 var zindex = 0;
 $ob.showPage = function (bizCode) {
-    $ob.saveShowingPage();
-    var page = pagePool.getPage(bizCode);
-    $ob.showingPage = page;
-    $("#content").html(page.content);
-    for (var input in page.values) {
-        document.forms["contentForm"][page.values[input].name].value = page.values[input].value;
+    try {
+        $ob.saveShowingPage();
+        var page = pagePool.getPage(bizCode);
+        $ob.showingPage = page;
+        $(".bizPages").css("display", "hidden");
+        $("#" + bizCode).css("display", "block");
     }
+    catch (e) {
+        log.error("onload", e);
+    }
+    finally {
+        log.debug("showPage", this);
+    }
+
 }
 $ob.deletePage = function (bizCode) {
-    pagePool.deletePage(bizCode);
-    $("#"+bizCode).html("");
+    try {
+        pagePool.deletePage(bizCode);
+        $("#" + bizCode).html("");
+    }
+    catch (e) {
+        log.error("deletePage", e);
+    }
+    finally {
+        log.debug("deletePage", this);
+    }
+
 }
 $ob.saveShowingPage = function () {
-    var showingPage = $ob.showingPage;
-    if (typeof showingPage.bizCode != "undefined") {
-        $("#contentForm").serializeArray();
-        showingPage.content = $("#content").html();
-        showingPage.values = $("#contentForm").serializeArray();
-        pagePool.setPage(showingPage);
+    try {
+        var showingPage = $ob.showingPage;
+        if (typeof showingPage.bizCode != "undefined") {
+            $("#contentForm").serializeArray();
+            showingPage.content = $("#content").html();
+            showingPage.values = $("#contentForm").serializeArray();
+            pagePool.setPage(showingPage);
+        }
     }
+    catch (e) {
+        log.error("saveShowingPage", e);
+    }
+    finally {
+        log.debug("saveShowingPage", this);
+    }
+
+
 }
 $ob.getType = function (bizCode) {
+    try {
+
+    }
+    catch (e) {
+        log.error("getType", e);
+    }
+    finally {
+        log.debug("getType", this);
+    }
+
     return bizCode;
 }
 
 $ob.getTitle = function (bizCode) {
+    try {
+
+    }
+    catch (e) {
+        log.error("getTitle", e);
+    }
+    finally {
+        log.debug("getTitle", this);
+    }
+
     return bizCode;
 }
 $(document).ajaxComplete(function () {
@@ -90,4 +158,34 @@ $(document).ajaxComplete(function () {
 $(document).ajaxError(function () {
     $("#status").text("Error.");
 });
+
+var log = new function () {
+    this.mode = "debug";
+    this.level = 1;
+    this.eventCnt = 0;
+    this.error = function (msg, e) {
+        $("#info").append("error [" + msg + "]" + e);
+    }
+    this.info = function (msg, e) {
+        $("#info").append("[" + msg + "]" + e);
+    }
+    this.debug = function (msg, obj) {
+        if (this.mode == "debug") {
+            $("#info").append("[" + this.eventCnt + "]" + msg + "<br>");
+            $("#info").scrollTop($("#info").scrollTop() + 100);
+        }
+    }
+
+    if (this.mode == "debug") {
+        $(document).ready(function () {
+
+            $("a").click(function (event) {
+                log.eventCnt++;
+                log.debug("-----------------------------------------");
+                log.debug("click! " + event.currentTarget.innerHTML);
+            });
+
+        });
+    }
+}
 
