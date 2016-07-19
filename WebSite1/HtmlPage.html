@@ -5,16 +5,40 @@
     <title>작업중123</title>
     <link rel="stylesheet" href="/css/StyleSheet.css">
     <script src="/js/jquery-3.1.0.js"></script>
-    <script src="/js/openBank.js?1"></script>
-    <script src="/js/pageManager.js?1"></script>
-    <script src="/js/component.js"></script>
+    <script src="/js/Process.js?1"></script>
+    <script src="/js/LayerManager.js?1"></script>
+    <script src="/js/LayerPool.js?1"></script>
+<script src="/js/component.js"></script>
     <script>
+        function AA(code) {
+            this.code = code;
+        }
+        AA.prototype.test1 = function () { alert("test1" + this.code);}
+        // Layer 상속
+        function BB(code) {
+            AA.call(this, code);
+            this.test1();
+            this.test2();
+        }
+        BB.prototype = new AA();
+        BB.prototype.test2 = function () { alert("test2" + this.code); }
+
         function test() {
-            $("#body").css("display","none");
+            var a = new BizLayer("aa");
+            var b = new TBarLayer("bb");
+            a.showingLayer = "test";
+            log.debug("a.showingLayer:" + a.showingLayer);
+            log.debug("b.showingLayer:" + b.showingLayer);
+            b.showingLayer = "test!!!";
+            log.debug("a.showingLayer:" + a.showingLayer);
+            log.debug("b.showingLayer:" + b.showingLayer);
+            //           var t = new BB("aa");
+//            alert(t.code);
+            
         }
     </script>
 </head>
-<body onload="$ob.onload()">
+<body onload="me.onload();">
     <div id="head">오픈뱅크<input type="button" onclick="test()" value="테스트" /></div>
     <div id="body">
         <div id="menu">
