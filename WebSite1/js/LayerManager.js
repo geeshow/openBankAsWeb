@@ -1,7 +1,7 @@
 ﻿var ajaxReturn = [];
 function Layer(code) {
     this.code = code;
-    this.source = "a";
+    this.source = "";
     this.title = code;
 }
 Layer.prototype.setSource = function (source) {
@@ -25,6 +25,15 @@ Layer.prototype.getServerSource = function (code) {
 Layer.prototype.bindInSource = function (source, bindName, value) {
     return source.replace(new RegExp(bindName, 'gi'), value);
 }
+Layer.prototype.show = function (code) {
+}
+Layer.prototype.hide = function (code) {
+}
+Layer.prototype.saveLayerData = function () {
+    return [];
+}
+Layer.prototype.getShowingCode = function () { }
+Layer.prototype.getPreCode = function() {}
 
 // Layer 상속
 function BizLayer(code) {
@@ -34,19 +43,33 @@ function BizLayer(code) {
     this.data;
 }
 BizLayer.prototype = new Layer();
+BizLayer.prototype.layerStack = [];
 BizLayer.prototype.getUrl = function (code) {
     return "/" + code.replace(/_/g, '/') + ".html?time=" + (new Date()).getTime();
 }
 BizLayer.prototype.show = function (layer) {
-    if (typeof layer.code == "string") {
-        $("#" + layer.code).show();
-        $("#title").html(layer.getTitle());
-        BizLayer.prototype.showingLayer = layer;
+    try {
+        if (typeof layer.code == "string") {
+            $("#" + layer.code).show();
+            $("#title").html(layer.getTitle());
+            if (BizLayer.prototype.layerStack[BizLayer.prototype.layerStack.length - 1] != layer.code)
+                BizLayer.prototype.layerStack.push(layer.code);
+            DD("layerStack ", BizLayer.prototype.layerStack);
+        }
+    }
+    catch (e) {
+        log.error("BizLayer.prototype.show", e);
+    }
+    finally {
+        log.debug("BizLayer.prototype.show");
     }
 }
 BizLayer.prototype.hide = function (code) {
+    DD(7,code);
     if (typeof code == "string") {
+        DD(8);
         $("#" + code).hide();
+        DD(9);
     }
 }
 BizLayer.prototype.pushHtml = function (source) {
@@ -61,9 +84,31 @@ BizLayer.prototype.getJQObject = function (code) {
 BizLayer.prototype.saveLayerData = function () {
     this.data = $("#contentForm").serializeArray();
 }
-BizLayer.prototype.showingLayer = {}
+BizLayer.prototype.getShowingCode = function () {
+    DD("------------",$(".bizPages:visible").attr("id"));
+    return $(".bizPages:visible").attr("id");
+}
+BizLayer.prototype.destory = function (code) {
+    try {
+        $("#" + code).remove();
+        var newLayerStack = [];
+        for ( var i = 0 ; i < BizLayer.prototype.layerStack.length ; i++ ) {
+            if (BizLayer.prototype.layerStack[i] != code)
+                newLayerStack.push(BizLayer.prototype.layerStack[i]);
+        }
 
-
+        BizLayer.prototype.layerStack = newLayerStack;
+    }
+    catch (e) {
+        log.error("BizLayer.prototype.destory", e);
+    }
+    finally {
+        log.debug("BizLayer.prototype.destory");
+    }
+}
+BizLayer.prototype.getPreCode = function () {
+    return BizLayer.prototype.layerStack.pop();
+}
 
 // Layer 상속
 function TBarLayer(code) {
@@ -75,26 +120,23 @@ TBarLayer.prototype = new Layer();
 TBarLayer.prototype.getUrl = function (code) {
     return "/component/taskbar.html?time=" + (new Date()).getTime();
 }
-TBarLayer.prototype.show = function (code) {
-}
-TBarLayer.prototype.hide = function (code) {
-}
+
 TBarLayer.prototype.pushHtml = function (source) {
     $("#tbarArea").append(source);
 }
 TBarLayer.prototype.setEvent = function (code) {
-    $("#tbar_title_" + code).click(function () {
+    $("#title_" + code).click(function () {
         me.showLayer(code.replace("tbar", "biz"), "biz");
     });
-    $("#tbar_close_" + code).click(function () {
-        log.debug("close");
-        //me.showLayer(this.id.replace("tbar", "biz"), "biz");
+    $("#close_" + code).click(function () {
+        DD("code", code);
+        me.closeLayer(code);
+        me.closeLayer(code.replace("tbar", "biz"), "biz");
     });
 }
 TBarLayer.prototype.getJQObject = function (code) {
     return $("#" + code);
 }
-TBarLayer.prototype.saveLayerData = function () {
-    return [];
+TBarLayer.prototype.destory = function (code) {
+    $("#" + code).remove();
 }
-TBarLayer.prototype.showingLayer = {}

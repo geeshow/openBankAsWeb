@@ -8,10 +8,10 @@ me.onload = function () {
         });
     }
     catch (e) {
-        log.error("onload", e);
+        log.error("me.onload", e);
     }
     finally {
-        log.debug("onload", this);
+        log.debug("me.onload");
     }
 }
 me.showLayer = function (code, type) {
@@ -22,14 +22,28 @@ me.showLayer = function (code, type) {
         
         var layer = LayerPool.getLayer(code);
         me.saveShowingLayer(layer);
-        layer.hide(layer.showingLayer.code); // 이전화면 숨김
+        layer.hide(layer.getShowingCode()); // 이전화면 숨김
         layer.show(layer);
     }
     catch (e) {
-        log.error("showLayer", e);
+        log.error("me.showLayer", e);
     }
     finally {
-        log.debug("showLayer", this);
+        log.debug("me.showLayer");
+    }
+}
+me.showPreLayer = function (layer) {
+    try {
+        var preCode = layer.getPreCode();
+        if (typeof preCode != "undefined") {
+            this.showLayer(preCode);
+        }
+    }
+    catch (e) {
+        log.error("me.showPreLayer", e);
+    }
+    finally {
+        log.debug("me.showPreLayer");
     }
 }
 me.createLayer = function (code, type) {
@@ -42,46 +56,54 @@ me.createLayer = function (code, type) {
             newLayer = new TBarLayer(code);
         }
         LayerPool.addLayer(newLayer);
-
+        DD(1);
         var source = newLayer.getServerSource(code); // HTML 소스 가져오기
+        DD(2);
         source = newLayer.bindInSource(source, newLayer.bindCode, code); // HTML 소스상 특정문자를 CODE로 변경
-        newLayer.hide(newLayer.showingLayer.code); // 이전화면 숨김
+        DD(3, newLayer, newLayer.code);
+        newLayer.hide(newLayer.getShowingCode()); // 이전화면 숨김
+        DD(4);
         newLayer.pushHtml(source); // 소스화면에 적용
+        DD(5);
         newLayer.setEvent(code);
+        DD(6);
     }
     catch (e) {
-        log.error("createLayer", e);
+        log.error("me.createLayer", e);
     }
     finally {
-        log.debug("createLayer", this);
+        log.debug("me.createLayer");
     }
 }
 
-me.deleteLayer = function (code) {
+me.closeLayer = function (code) {
     try {
+        var layer = LayerPool.getLayer(code);
+        layer.destory(code);
+        this.showPreLayer(layer);
         LayerPool.deleteLayer(code);
-        $("#" + code).html("");
     }
     catch (e) {
-        log.error("deleteLayer", e);
+        log.error("me.closeLayer", e);
     }
     finally {
-        log.debug("deleteLayer", this);
+        log.debug("me.closeLayer");
     }
 
 }
 me.saveShowingLayer = function (layer) {
     try {
-        if (typeof layer.showingLayer.code != "undefined") {
-            layer.showingLayer.saveLayerData();
-            //LayerPool.setLayer(layer.showingLayer);
+        if (typeof layer.getShowingCode() != "undefined") {
+            var showingLayer = LayerPool.getLayer(layer.getShowingCode());
+            showingLayer.saveLayerData();
+            LayerPool.setLayer(showingLayer);
         }
     }
     catch (e) {
-        log.error("saveShowingLayer", e);
+        log.error("me.saveShowingLayer", e);
     }
     finally {
-        log.debug("saveShowingLayer", this);
+        log.debug("me.saveShowingLayer");
     }
 }
 me.getType = function (code) {
@@ -89,10 +111,10 @@ me.getType = function (code) {
 
     }
     catch (e) {
-        log.error("getType", e);
+        log.error("me.getType", e);
     }
     finally {
-        log.debug("getType", this);
+        log.debug("me.getType");
     }
 
     return code;
@@ -103,10 +125,10 @@ me.getTitle = function (code) {
 
     }
     catch (e) {
-        log.error("getTitle", e);
+        log.error("me.getTitle", e);
     }
     finally {
-        log.debug("getTitle", this);
+        log.debug("me.getTitle");
     }
 
     return code;
@@ -118,33 +140,4 @@ $(document).ajaxError(function () {
     $("#status").text("Error.");
 });
 
-var log = new function () {
-    this.mode = "debug";
-    this.level = 1;
-    this.eventCnt = 0;
-    this.error = function (msg, e) {
-        $("#info").append("error [" + msg + "]" + e);
-    }
-    this.info = function (msg, e) {
-        $("#info").append("[" + msg + "]" + e);
-    }
-    this.debug = function (msg, obj) {
-        if (this.mode == "debug") {
-            $("#info").append("[" + this.eventCnt + "] " + msg + "<br>");
-            $("#info").scrollTop($("#info").scrollTop() + 100);
-        }
-    }
-
-    if (this.mode == "debug") {
-        $(document).ready(function () {
-
-            $("a").click(function (event) {
-                log.eventCnt++;
-                log.debug("-----------------------------------------");
-                log.debug("click! " + event.currentTarget.innerHTML);
-            });
-
-        });
-    }
-}
 
