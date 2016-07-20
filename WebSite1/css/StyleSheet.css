@@ -12,16 +12,23 @@
 
 #title {width:100%;height:20px;background-color:#38556b;color:#ffffff}
 #content {width:100%;height:640px}
-#status {width:100%;height:20px;background-color:#d0d0d0}
-#tbarArea {width:100%;height:20px;background-color:#ffffff}
-.tbar {
+#status {width:100%;height:18px;background-color:#d0d0d0}
+#tbarArea {width:100%;height:22px;background-color:#ffffff}
+.taskbar {
     float: left;
     width: 130px;
-    height: 20px;
-    background-color: #364e6f;
+    height: 22px;
     color: #ffffff;
     font-size: 9pt;
+    border:solid 1px #002b67;
+    background-color: #364e6f;
+    cursor:pointer;
 }
+.taskbar:hover {background-color: #80abe5;}
+
+.taskbarTitle {width:99px;height:16px;}
+.taskbarClose {height:16px;}
+.taskbarClose:hover {height:16px;background-color: #d8ab5b;border:1px #936a21;vertical-align:middle}
 .bizPages {border:solid 2px #e0ee28;margin:1px;}
 h1 {
 	font-size: 2em;

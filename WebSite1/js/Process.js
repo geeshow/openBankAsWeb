@@ -5,7 +5,7 @@ me.onload = function () {
         $(".bizTreeMenu").click(function () {
             me.showLayer(this.id.replace("menu", "biz"), "biz");
             me.showLayer(this.id.replace("menu", "tbar"), "tbar");
-        })
+        });
     }
     catch (e) {
         log.error("onload", e);
@@ -47,6 +47,7 @@ me.createLayer = function (code, type) {
         source = newLayer.bindInSource(source, newLayer.bindCode, code); // HTML 소스상 특정문자를 CODE로 변경
         newLayer.hide(newLayer.showingLayer.code); // 이전화면 숨김
         newLayer.pushHtml(source); // 소스화면에 적용
+        newLayer.setEvent(code);
     }
     catch (e) {
         log.error("createLayer", e);

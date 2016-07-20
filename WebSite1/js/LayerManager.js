@@ -50,7 +50,10 @@ BizLayer.prototype.hide = function (code) {
     }
 }
 BizLayer.prototype.pushHtml = function (source) {
-    $("#content").html($("#content").html() + source);
+    $("#content").append(source);
+}
+BizLayer.prototype.setEvent = function (code) {
+
 }
 BizLayer.prototype.getJQObject = function (code) {
     return $("#" + code);
@@ -77,7 +80,16 @@ TBarLayer.prototype.show = function (code) {
 TBarLayer.prototype.hide = function (code) {
 }
 TBarLayer.prototype.pushHtml = function (source) {
-    $("#tbarArea").html($("#tbarArea").html() + source);
+    $("#tbarArea").append(source);
+}
+TBarLayer.prototype.setEvent = function (code) {
+    $("#tbar_title_" + code).click(function () {
+        me.showLayer(code.replace("tbar", "biz"), "biz");
+    });
+    $("#tbar_close_" + code).click(function () {
+        log.debug("close");
+        //me.showLayer(this.id.replace("tbar", "biz"), "biz");
+    });
 }
 TBarLayer.prototype.getJQObject = function (code) {
     return $("#" + code);
