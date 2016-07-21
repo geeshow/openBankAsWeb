@@ -6,6 +6,10 @@ me.onload = function () {
             me.showLayer(this.id.replace("menu", "biz"), "biz");
             me.showLayer(this.id.replace("menu", "tbar"), "tbar");
         });
+        $(".layerTopBtn").click(function (aa) {
+            DD("test", aa);
+        });
+        
     }
     catch (e) {
         log.error("me.onload", e);
@@ -56,17 +60,11 @@ me.createLayer = function (code, type) {
             newLayer = new TBarLayer(code);
         }
         LayerPool.addLayer(newLayer);
-        DD(1);
         var source = newLayer.getServerSource(code); // HTML 소스 가져오기
-        DD(2);
         source = newLayer.bindInSource(source, newLayer.bindCode, code); // HTML 소스상 특정문자를 CODE로 변경
-        DD(3, newLayer, newLayer.code);
         newLayer.hide(newLayer.getShowingCode()); // 이전화면 숨김
-        DD(4);
         newLayer.pushHtml(source); // 소스화면에 적용
-        DD(5);
         newLayer.setEvent(code);
-        DD(6);
     }
     catch (e) {
         log.error("me.createLayer", e);

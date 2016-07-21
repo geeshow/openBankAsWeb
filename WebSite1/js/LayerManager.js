@@ -85,7 +85,6 @@ BizLayer.prototype.saveLayerData = function () {
     this.data = $("#contentForm").serializeArray();
 }
 BizLayer.prototype.getShowingCode = function () {
-    DD("------------",$(".bizPages:visible").attr("id"));
     return $(".bizPages:visible").attr("id");
 }
 BizLayer.prototype.destory = function (code) {
@@ -139,4 +138,11 @@ TBarLayer.prototype.getJQObject = function (code) {
 }
 TBarLayer.prototype.destory = function (code) {
     $("#" + code).remove();
+}
+TBarLayer.prototype.show = function (layer) {
+    DD("show", layer.code);
+    $("#" + layer.code).css({backgroundColor:"#fff29d",color:"#000000"});
+}
+TBarLayer.prototype.hide = function () {
+    $(".taskbar").css({ backgroundColor: "#364e6f", color: "#ffffff" });
 }

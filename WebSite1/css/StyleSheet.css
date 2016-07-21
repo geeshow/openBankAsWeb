@@ -10,7 +10,9 @@
 #main {width:700px;height:100%;float:left;background-color:#ffffff;}
 #info {width:400px;height:100%;float:left;font-family:'Times New Roman', Times, serif;overflow-y:scroll;font-size:13px;}
 
-#title {width:100%;height:20px;background-color:#38556b;color:#ffffff}
+#title {width:650px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
+#layerBtn {width:50px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
+#layerBtn a {color:#ffffff;}
 #content {width:100%;height:640px}
 #status {width:100%;height:18px;background-color:#d0d0d0}
 #tbarArea {width:100%;height:22px;background-color:#ffffff}
