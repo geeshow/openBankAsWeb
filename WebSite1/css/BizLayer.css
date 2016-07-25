@@ -1,0 +1,20 @@
+﻿body {
+	margin: 0;
+}
+
+fieldset {}
+label {font-size:9pt;display:inline-block;text-align:right;vertical-align:middle;border-bottom:1px solid #ffffff}
+input {font-size:9pt;}
+select {font-size:9pt;}
+.width12 {width:1160px;height:20px;float:left;}
+.width11 {width:1000px;height:20px;float:left;}
+.width10 {width:850px;height:20px;float:left;}
+.width9 {width:710px;height:20px;float:left;}
+.width8 {width:680px;height:20px;float:left;}
+.width7 {width:560px;height:20px;float:left;}
+.width6 {width:450px;height:20px;float:left;font-size:9pt;}
+.width5 {width:350px;height:20px;float:left;}
+.width4 {width:260px;height:20px;float:left;}
+.width3 {width:180px;height:20px;float:left;background-color:#808080;}
+.width2 {width:110px;}
+.width1 {width:50px;height:20px;float:left;}
