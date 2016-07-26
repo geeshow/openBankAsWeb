@@ -27,8 +27,10 @@ $(document).ready(function () {
         });
     });
     $("input[suffix]").each(function () {
-        var size = $(this).attr("suffix").bytes();
-        $(this).css("width", ($(this).innerWidth() - (size*15)) + "px");
-        $(this).after("<span class='inputTitle'>" + $(this).attr("suffix") + "</span>");
+        var size = $(this).attr("suffix").length;
+        var width = size * 13;
+        $(this).css("width", ($(this).innerWidth() - (width + 13)) + "px");
+        $(this).css("border-right", "0px");
+        $(this).after("<span class='suffix' style='width:" + (width) + "px'>" + $(this).attr("suffix") + "</span>");
     });
 });

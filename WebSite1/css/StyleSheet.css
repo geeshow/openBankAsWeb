@@ -2,15 +2,15 @@
 	margin: 0;
 }
 
-#head {width:1300px;height:80px;background-color:#076cb5}
-#body {width:1300px;height:700px;background-color:#d2ecff}
-#foot {width:1300px;height:50px;background-color:#bcdebb}
+#head {width:1700px;height:80px;background-color:#076cb5}
+#body {width:1700px;height:700px;background-color:#d2ecff}
+#foot {width:1700px;height:50px;background-color:#bcdebb}
 
 #menu {width:200px;height:80px;float:left;}
-#main {width:700px;height:100%;float:left;background-color:#ffffff;}
+#main {width:1050px;height:100%;float:left;background-color:#ffffff;}
 #info {width:400px;height:100%;float:left;font-family:'Times New Roman', Times, serif;overflow-y:scroll;font-size:13px;}
 
-#title {width:650px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
+#title {width:1000px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
 #layerBtn {width:50px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
 #layerBtn a {color:#ffffff;}
 #content {width:100%;height:640px}
