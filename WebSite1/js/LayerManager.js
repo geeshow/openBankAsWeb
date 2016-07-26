@@ -39,13 +39,17 @@ Layer.prototype.getPreCode = function() {}
 function BizLayer(code) {
     Layer.call(this, code);
     this.type = "biz";
-    this.bindCode = "%bizCode%";
+    this.bindCode = "%bizUrl%";
     this.data;
 }
 BizLayer.prototype = new Layer();
 BizLayer.prototype.layerStack = [];
 BizLayer.prototype.getUrl = function (code) {
-    return "/" + code.replace(/_/g, '/') + ".html?time=" + (new Date()).getTime();
+    return "/component/bizFrame.html?time=" + (new Date()).getTime();
+}
+BizLayer.prototype.bindInSource = function (source, bindName, value) {
+    source = source.replace(new RegExp("%bizCode%", 'gi'), value);
+    return source.replace(new RegExp(bindName, 'gi'), "/" + value.replace(/_/g, '/') + ".html");
 }
 BizLayer.prototype.show = function (layer) {
     try {

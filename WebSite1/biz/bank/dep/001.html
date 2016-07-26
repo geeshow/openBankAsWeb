@@ -6,25 +6,92 @@
     <link rel="stylesheet" href="/css/BizLayer.css">
     <script src="/js/jquery-3.1.0.js"></script>
     <script src="/js/Logger.js?1"></script>
+    <script src="/js/Input.js?1"></script>
 </head>
 <body>
     <div id="%bizCode%">
         <form id="form_%bizCode%" method="post">
             <div class="width12">
                 <fieldset>
-                    <legend>고객검색</legend>
-                    <div class="width6">
-                        <div class="width6">
-                            <label for="custSearch" class="width2">검색항목</label>
-                            <select name="custSearch">
-                                <option value="1">실명번호</option>
-                                <option value="2">고객번호</option>
-                            </select>
-                        </div>
+                    <legend>showZoom - 돋보기버튼 생성 예제.</legend>
+                    <span class="blockDesc">※생성된 돋보기 버튼의 ID는 접미어 '_ZOOM'가 추가됨. 'sample1_ZOOM'. onZoomClick 속성으로 onclick 이벤트 설정가능.</span>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">showZoom 샘플1</span>
+                        <input class="inputControll" type="text" id="sample1" value="미적용" size="20"/>
+                        <span class="inputDesc">돋보기 버튼 미적용. 일반적인 text 박스.</span>
                     </div>
-                    <div class="width6">
-                        <label for="acno">계좌번호</label>
-                        <input type="text" name="custNo" id="custNo" value="" size="20" />
+                    <div class="dataSet">
+                        <span class="inputTitle width3">showZoom 샘플2</span>
+                        <input class="inputControll" type="text" id="sample2" value="적용" size="20"
+                               showZoom="after" onZoomClick="alert(this.value);" />
+                        <span class="inputDesc">돋보기 버튼 적용 ex) &ltinput type="text" <strong>showZoom="after"</strong></span>
+                    </div>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">showZoom 샘플3</span>
+                        <input class="inputControll" type="text" id="sample3" value="적용" size="20"
+                               showZoom="before" onZoomClick="alert(this.value);" />
+                        <span class="inputDesc">돋보기 버튼 적용 ex) &ltinput type="text" <strong>showZoom="before"</strong></span>
+                    </div>
+                    <span class="blockDesc">onZoomClick 속성으로 onclick 처리를 할 수 있다.</span>
+                </fieldset>
+                <fieldset>
+                    <legend>showCalendar - 달력버튼 생성 예제.</legend>
+                    <span class="blockDesc">※ 생성된 달력 버튼의 ID는 접미어 '_CAL'가 추가됨. 'sample1_CAL'. 클릭시 달력 입력 상자 활성</span>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">showCalendar 샘플1</span>
+                        <input class="inputControll" type="text" id="sample4" value="달력" size="20"
+                               showCalendar="after" />
+                        <span class="inputDesc">달력 버튼 적용 ex) &ltinput type="text" <strong>showCalendar="after"</strong></span>
+                    </div>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">showCalendar 샘플2</span>
+                        <input class="inputControll" type="text" id="sample5" value="달력" size="20"
+                               showCalendar="before" />
+                        <span class="inputDesc">달력 버튼 적용 ex) &ltinput type="text" <strong>showCalendar="before"</strong></span>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>showZoom / showCalendar - 둘다적용.</legend>
+                    <span class="blockDesc">※ 같은 위치에 적용시 showZoom 버튼이 밖으로 적용 됨.</span>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">둘다적용 샘플1</span>
+                        <input class="inputControll" type="text" id="sample6" value="둘다after" size="20"
+                               showCalendar="after" showZoom="after" onZoomClick="alert(this.value);" />
+                        <span class="inputDesc">showCalendar="after" showZoom="after"</span>
+                    </div>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">둘다적용 샘플2</span>
+                        <input class="inputControll" type="text" id="sample7" value="둘다before" size="20"
+                               showCalendar="before" showZoom="before" onZoomClick="alert(this.value);" />
+                        <span class="inputDesc">showCalendar="after" showZoom="after"</span>
+                    </div>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">둘다적용 샘플3</span>
+                        <input class="inputControll" type="text" id="sample8" value="한쪽씩" size="20"
+                               showCalendar="after" showZoom="before" onZoomClick="alert(this.value);" />
+                        <span class="inputDesc">showCalendar="after" showZoom="after"</span>
+                    </div>
+                </fieldset>
+                <fieldset>
+                    <legend>suffix - 접미어</legend>
+                    <span class="blockDesc">※ input 객체의 접미어로 단위나 속성 등을 표시. ex(원, %, $).</span>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">접미어 샘플1</span>
+                        <input class="inputControll" type="text" id="sample11" value="10,000,000" size="20"
+                               suffix="원"/>
+                        <span class="inputDesc">suffix="원"</span>
+                    </div>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">접미어 샘플2</span>
+                        <input class="inputControll" type="text" id="sample7" value="5.1" size="20"
+                               suffix="%" />
+                        <span class="inputDesc">suffix="%"</span>
+                    </div>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">접미어 샘플3</span>
+                        <input class="inputControll" type="text" id="sample8" value="긴접미어" size="20"
+                              suffix="긴접미어" />
+                        <span class="inputDesc">suffix="긴접미어"</span>
                     </div>
                 </fieldset>
             </div>

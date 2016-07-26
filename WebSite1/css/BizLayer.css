@@ -1,20 +1,28 @@
 ﻿body {
-	margin: 0;
+	margin: 0;font-family: "돋움",dotum,"Apple SD Gothic NEO",helvetica,sans-serif;
 }
 
-fieldset {}
-label {font-size:9pt;display:inline-block;text-align:right;vertical-align:middle;border-bottom:1px solid #ffffff}
-input {font-size:9pt;}
-select {font-size:9pt;}
-.width12 {width:1160px;height:20px;float:left;}
-.width11 {width:1000px;height:20px;float:left;}
-.width10 {width:850px;height:20px;float:left;}
-.width9 {width:710px;height:20px;float:left;}
-.width8 {width:680px;height:20px;float:left;}
-.width7 {width:560px;height:20px;float:left;}
-.width6 {width:450px;height:20px;float:left;font-size:9pt;}
-.width5 {width:350px;height:20px;float:left;}
-.width4 {width:260px;height:20px;float:left;}
-.width3 {width:180px;height:20px;float:left;background-color:#808080;}
-.width2 {width:110px;}
-.width1 {width:50px;height:20px;float:left;}
+label,input,select,dd,dt {font-size:10pt;font-family: "돋움",dotum,"Apple SD Gothic NEO",helvetica,sans-serif;}
+fieldset {margin:5px;margin-bottom:15px;}
+legend {font-size:12pt;font-weight:bold;margin:0px;padding:0px;}
+
+.dataSet        {height:35px;vertical-align: top;}
+.info           {height:21px;font-size:10pt;color:#000000;display:inline-block;}
+.inputTitle     {height:17px;font-size:10pt;padding:6px;text-align:right;}
+.inputControll  {height:18px;padding:3px;border:solid 1px #555555;}
+.inputDesc      {height:21px;font-size:10pt;color:#777777;display:inline-block;}
+.blockDesc      {height:18px;font-size:9pt;color:#3333AA;display:inline-block;padding:5px;}
+.smallBtn       {width:25px;height:26px;margin:0px;padding:0px;}
+
+.width12 {width:1160px;float:left;}
+.width11 {width:1000px;float:left;}
+.width10 {width:850px;float:left;}
+.width9 {width:710px;float:left;}
+.width8 {width:680px;float:left;}
+.width7 {width:560px;float:left;}
+.width6 {width:450px;float:left;font-size:9pt;}
+.width5 {width:350px;float:left;}
+.width4 {width:260px;float:left;}
+.width3 {width:180px;float:left;}
+.width2 {width:110px;float:left;}
+.width1 {width:50px;float:left;}
