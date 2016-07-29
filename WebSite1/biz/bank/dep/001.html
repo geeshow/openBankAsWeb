@@ -7,8 +7,14 @@
     <script src="/js/jquery-3.1.0.js"></script>
     <script src="/js/Logger.js?1"></script>
     <script src="/js/Input.js?1"></script>
+    <script src="/js/component.js?1"></script>
+    <script>
+        function test() {
+            util.mask(1, "YYYY");
+        }
+    </script>
 </head>
-<body>
+<body onload="test()">
     <div id="%bizCode%">
         <form id="form_%bizCode%" method="post">
             <div class="width11">
@@ -115,11 +121,11 @@
                     </div>
                 </fieldset>
                 <fieldset>
-                    <legend>format - 패턴</legend>
+                    <legend>mask - 패턴</legend>
                     <span class="blockDesc">※ X:한글자, 특수문자:적용패턴(comma,-,: 등), 마침표:소숫점표시) </span>
                     <div class="dataSet">
                         <span class="inputTitle width3">접미어 샘플1</span>
-                        <input class="inputControll" type="text" id="sample21" format="ZZZ-ZZZ-ZZZZ" value="" size="20" />
+                        <input class="inputControll" type="text" id="sample21" mask="YYYY-MM-DD" value="" size="20" />
                         <span class="inputDesc">ZZZ-ZZZ-ZZZZ</span>
                     </div>
                     <div class="dataSet">
