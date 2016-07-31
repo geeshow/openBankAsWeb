@@ -1,0 +1,27 @@
+﻿{
+  "KOREA_CITY": {
+    "type": "code",
+    "description": "한국도시목록",
+    "items": {
+      "01": "서울",
+      "02": "부산",
+      "03": "대전",
+      "04": "대구",
+      "05": "광주"
+    }
+  },
+    "WEEK_LIST": {
+    "type": "code",
+    "description": "요일목록",
+    "items": {
+      "SUM": "일",
+      "MON": "월",
+      "TUE": "화",
+      "WEN": "수",
+      "THU": "목",
+      "FRI": "금",
+      "SAT": "토"
+    }
+  }
+
+}

@@ -8,7 +8,7 @@
     this.info = function (msg, e) {
         $("#info").append("[" + msg + "]" + e);
     }
-    this.debug = function () {
+    this.debug = function (msg) {
         if (this.mode == "debug") {
             for (var i in arguments) {
                 $("#info").append("[" + this.eventCnt + "] " + arguments[i] + "<br>");
@@ -33,7 +33,9 @@
 function DD() {
     var msg = "[DD]";
     for (var i in arguments) {
-        msg += arguments[i] + ", ";
+        msg += arguments[i];
+        if (arguments.length -1 > i )
+            msg += ", ";
     }
     log.debug(msg);
 }

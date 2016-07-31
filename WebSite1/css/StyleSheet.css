@@ -1,21 +1,29 @@
 ﻿body {
 	margin: 0;
 }
+a:link, a:visited{color:#3C3C3C;text-decoration:none;}
+a:hover, a:active{color:#0099cc;text-decoration: underline;}
 
-#head {width:1700px;height:80px;background-color:#076cb5}
-#body {width:1700px;height:700px;background-color:#d2ecff}
+#head {width:1700px;height:40px;background-color:#008c9a;}
+.mainTitle {color:#ffffff;font-size:15pt;padding:10px;font-weight:bold;}
+#body {width:1700px;height:800px;background-color:#ffffff}
 #foot {width:1700px;height:50px;background-color:#bcdebb}
 
-#menu {width:200px;height:80px;float:left;}
-#main {width:1050px;height:100%;float:left;background-color:#ffffff;}
+#menu {width:200px;float:left;margin:3px;padding:0px;border:solid 1px #eeeeee;}
+#menu > h3 {padding:3px;padding-left:5px;margin:0px;border:solid 1px #eeeeee;background-color:#e0e0e0;font-size:11pt;font-weight:normal;}
+#menu > ul {padding:0px;padding-left:15px;margin:0px;}
+.bizTreeMenu {list-style:none;margin:5px;padding:0px;font-size:10pt;}
+
+#main {width:1040px;height:100%;float:left;background-color:#ffffff;}
 #info {width:400px;height:100%;float:left;font-family:'Times New Roman', Times, serif;overflow-y:scroll;font-size:13px;}
 
-#title {width:1000px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
-#layerBtn {width:50px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
-#layerBtn a {color:#ffffff;}
-#content {width:100%;height:640px}
+.layerTitle {width:990px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
+.layerBtn {width:50px;height:20px;background-color:#38556b;color:#ffffff;float:left;}
+.layerBtn a {color:#ffffff;}
+
+#content {width:100%;height:740px;position:relative;background-color:#d0d0d0;}
 #status {width:100%;height:18px;background-color:#d0d0d0}
-#tbarArea {width:100%;height:22px;background-color:#ffffff}
+#tbarArea {width:100%;height:22px;background-color:#a0a0a0;}
 .taskbar {
     float: left;
     width: 130px;
@@ -23,7 +31,7 @@
     color: #ffffff;
     font-size: 9pt;
     border:solid 1px #002b67;
-    background-color: #364e6f;
+    background-color: #008c9a;
     cursor:pointer;
 }
 .taskbar:hover {background-color: #80abe5;}
@@ -31,7 +39,7 @@
 .taskbarTitle {width:99px;height:16px;}
 .taskbarClose {height:16px;}
 .taskbarClose:hover {height:16px;background-color: #d8ab5b;border:1px #936a21;vertical-align:middle}
-.bizPages {border:solid 2px #e0ee28;margin:1px;}
+.bizPages {margin:0px;position:absolute;top:0px;left:0px;background-color:#ffffff;z-index:0;}
 h1 {
 	font-size: 2em;
 	margin: 0 0 0.33em;
