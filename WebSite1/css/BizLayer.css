@@ -10,7 +10,7 @@ legend {font-size:12pt;font-weight:bold;margin:0px;padding:0px;}
 .info           {height:21px;font-size:10pt;color:#000000;display:inline-block;}
 .inputTitle     {height:17px;font-size:10pt;padding:6px;text-align:right;}
 .inputControll  {height:18px;padding:3px;border:solid 1px #555555;}
-.inputDesc      {height:21px;font-size:10pt;color:#777777;display:inline-block;}
+.inputDesc      {height:21px;font-size:10pt;color:#444444;display:inline-block;}
 .blockDesc      {height:18px;font-size:9pt;color:#3333AA;display:inline-block;padding:5px;}
 .smallBtn       {width:25px;height:26px;margin:0px;padding:0px;}
 .suffix         {height:18px;font-size:12px;color:#999999;font-family: "굴림";margin-left:2px;letter-spacing:1px;border:solid 1px #555555;border-left:0px;display:inline-block;margin:0px;padding:5px 2px 1px 3px;vertical-align:top;text-align:right;}

@@ -1,23 +1,124 @@
-﻿<html>
+﻿<!DOCTYPE html>
+<html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>작업중123</title>
+    <title>패턴적용</title>
+    <link rel="stylesheet" href="/css/BizLayer.css">
+    <script src="/js/jquery-3.1.0.js"></script>
+    <script src="/js/Logger.js?1"></script>
+    <script src="/js/Input.js?1"></script>
+    <script src="/js/Util.js?1"></script>
+    <script>
+        function test() {
+//            util.mask(1, "YYYY");
+        }
+    </script>
 </head>
-<body>
-                    <div>
-                        <input  type="text" name="sample1" id="sample1" value="돋보기버튼" size="20"
-                               showZoom="after" onZoomClick="alert(this.value);" /> /
-                        <input type="text" name="sample2" id="sample2" value="예제" size="5"
-                               onZoomClick="alert(this.value);" />
-
-                        <span class="inputDesc">생성된 zoom 버튼의 ID는 접미어 '_ZOOM'가 추가됨. 'sample1_ZOOM'. onZoomClick 속성으로 onclick 이벤트 설정가능.</span>
+<body onload="test()">
+    <div id="%bizCode%">
+        <form id="form_%bizCode%" method="post">
+            <div class="width11">
+                <fieldset>
+                    <legend>숫자 표현 Mask</legend>
+                    <span class="blockDesc">※Mask 속성에 Z 또는 9값이 있는 경우 숫자형으로 판단. 허용속성(Z,9,comma(,), point(.))</span>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">기본 단위 Mask</span>
+                            <input class="inputControll" type="text" id="sample1" value="1000000" size="20" mask="ZZZ,ZZZ,ZZZ,ZZ9" />
+                            <span class="inputDesc">* Mask : ZZZ,ZZZ,ZZZ,ZZ9  * 입력값 : 1000000</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">적용 소스</span>
+                            <input class="inputControll width9" type="text" size="100" value='<input class="inputControll" type="text" id="sample1" value="1000000" size="20" mask="ZZZ,ZZZ,ZZZ,ZZ9" />' readonly />
+                        </div>
+                    </p>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">최소 자리수 설정</span>
+                            <input class="inputControll" type="text" id="sample2" value="1000" size="20" mask="ZZZ,999,999" />
+                            <span class="inputDesc">* Mask : ZZZ,999,999  * 입력값 : 1000</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3"></span>
+                            <span class="inputDesc">9 : 해당 자리수에 값이 없는 경우 0으로 표시하여 최소 자리수 유지</span>
+                        </div>
+                    </p>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">최대 자리수 설정</span>
+                            <input class="inputControll" type="text" id="sample21" value="1234567" size="20" mask="ZZZ,ZZ9" />
+                            <span class="inputDesc">* Mask : ZZZ,ZZ9  * 입력값 : 1234567</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3"></span>
+                            <span class="inputDesc">mask를 초과한 값은 삭제처리. 첫번째 1이 삭제되었음.</span>
+                        </div>
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>소수점 표현 Mask</legend>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">소수점 설정</span>
+                            <input class="inputControll" type="text" id="sample3" value="12.3" size="20" mask="ZZ9.99" />
+                            <span class="inputDesc">* Mask : ZZ9.99  * 입력값 : 12.3</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">소수점 설정</span>
+                            <input class="inputControll" type="text" id="sample31" value="12.345" size="20" mask="ZZ9.99" />
+                            <span class="inputDesc">* Mask : ZZ9.99  * 입력값 : 12.345</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">소수점 설정</span>
+                            <input class="inputControll" type="text" id="sample32" value="12.345" size="20" mask="ZZ9.99999" />
+                            <span class="inputDesc">* Mask : ZZ9.99999  * 입력값 : 12.345</span>
+                        </div>
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>날짜 표현 Mask</legend>
+                    <span class="blockDesc">※ YYYY, MM, DD 3가지 문자열이 모두 설정되어야 날짜로 인식. 날짜 허용범위 체크 함.</span>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">기본날짜</span>
+                            <input class="inputControll" type="text" id="sample41" value="20160730" size="20" mask="YYYY-MM-DD" />
+                            <span class="inputDesc">* Mask : YYYY-MM-DD  * 입력값 : 20160730</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">기본날짜</span>
+                            <input class="inputControll" type="text" id="sample42" value="20160730" size="20" mask="YYYY/MM/DD" />
+                            <span class="inputDesc">* Mask : YYYY/MM/DD  * 입력값 : 20160730</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">한글표현 날짜</span>
+                            <input class="inputControll" type="text" id="sample43" value="20160730" size="20" mask="YYYY년 MM월 DD일" />
+                            <span class="inputDesc">* Mask : YYYY년 MM월 DD일  * 입력값 : 20160730</span>
+                        </div>
+                        <div class="dataSet">
+                            <span class="inputTitle width3"></span>
+                            <span class="inputDesc"><strong>* 한글은 패턴으로 사용되므로 한글값은 패턴 적용 불가</strong></span>
+                        </div>
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>기타표현식</legend>
+                    <span class="blockDesc">※ 영문/숫자를 제외한 값은 MASK값으로 인식</span>
+                    <div class="dataSet">
+                        <span class="inputTitle width3">우편번호</span>
+                        <input class="inputControll" type="text" id="sample6" value="100200" size="20" mask="AAA-AAA" />
+                        <span class="inputDesc">* Mask : AAA-AAA  * 입력값 : 100200</span>
                     </div>
                     <div class="dataSet">
-                        <label for="sample5">showCalendar</label>
-                        <input type="text" name="sample5" id="sample5" value="달력예제" size="20" />
-                        <span class="inputDesc">
-                            생성된 달력 버튼의 ID는 접미어  '_CAL'가 추가됨. 'sample2_CAL'.
-                        </span>
+                        <span class="inputTitle width3">전화번호</span>
+                        <input class="inputControll" type="text" id="sample6" value="05512344567" size="20" mask="AAA)AAAA-AAAA" />
+                        <span class="inputDesc">* Mask : AAA)AAAA-AAAA  * 입력값 : 05512344567</span>
                     </div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+    <div id="info">
+
+    </div>
 </body>
 </html>

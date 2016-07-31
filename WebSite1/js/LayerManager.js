@@ -1,152 +1,152 @@
-﻿var ajaxReturn = [];
-function Layer(code) {
-    this.code = code;
-    this.source = "";
-    this.title = code;
+﻿var me = function () {
 }
-Layer.prototype.setSource = function (source) {
-    this.source = source;
-}
-Layer.prototype.getTitle = function () {
-    return this.title;
-}
-Layer.prototype.getServerSource = function (code) {
-    var url = this.getUrl(code);
-    $.ajax({
-        type: "GET"
-        , url: url
-        , data: {}
-        , async: false
-    }).done(function (source) {
-        ajaxReturn[this.url] = source;
-    });
-    return ajaxReturn[url];
-}
-Layer.prototype.bindInSource = function (source, bindName, value) {
-    return source.replace(new RegExp(bindName, 'gi'), value);
-}
-Layer.prototype.show = function (code) {
-}
-Layer.prototype.hide = function (code) {
-}
-Layer.prototype.saveLayerData = function () {
-    return [];
-}
-Layer.prototype.getShowingCode = function () { }
-Layer.prototype.getPreCode = function() {}
-
-// Layer 상속
-function BizLayer(code) {
-    Layer.call(this, code);
-    this.type = "biz";
-    this.bindCode = "%bizUrl%";
-    this.data;
-}
-BizLayer.prototype = new Layer();
-BizLayer.prototype.layerStack = [];
-BizLayer.prototype.getUrl = function (code) {
-    return "/component/bizFrame.html?time=" + (new Date()).getTime();
-}
-BizLayer.prototype.bindInSource = function (source, bindName, value) {
-    source = source.replace(new RegExp("%bizCode%", 'gi'), value);
-    return source.replace(new RegExp(bindName, 'gi'), "/" + value.replace(/_/g, '/') + ".html");
-}
-BizLayer.prototype.show = function (layer) {
+me.onload = function () {
     try {
-        if (typeof layer.code == "string") {
-            $("#" + layer.code).show();
-            $("#title").html(layer.getTitle());
-            if (BizLayer.prototype.layerStack[BizLayer.prototype.layerStack.length - 1] != layer.code)
-                BizLayer.prototype.layerStack.push(layer.code);
-            DD("layerStack ", BizLayer.prototype.layerStack);
+        $(".bizTreeMenu").click(function () {
+            me.showLayer(this.id.replace("menu", "biz"), "biz");
+            me.showLayer(this.id.replace("menu", "tbar"), "tbar");
+        });
+        $(".layerTopBtn").click(function (aa) {
+        });
+        
+    }
+    catch (e) {
+        log.error("me.onload", e);
+    }
+    finally {
+        log.debug("me.onload");
+    }
+}
+me.showLayer = function (code, type) {
+    try {
+        if (!LayerPool.isLayer(code)) {
+            me.createLayer(code, type);
+        }
+        
+        var layer = LayerPool.getLayer(code);
+        layer.show(layer);
+    }
+    catch (e) {
+        log.error("me.showLayer", e);
+    }
+    finally {
+        log.debug("me.showLayer");
+    }
+}
+me.showPreLayer = function (layer) {
+    try {
+        var preCode = layer.getPreCode();
+        if (typeof preCode != "undefined" && preCode != "") {
+            this.showLayer(preCode);
         }
     }
     catch (e) {
-        log.error("BizLayer.prototype.show", e);
+        log.error("me.showPreLayer", e);
     }
     finally {
-        log.debug("BizLayer.prototype.show");
+        log.debug("me.showPreLayer");
     }
 }
-BizLayer.prototype.hide = function (code) {
-    DD(7,code);
-    if (typeof code == "string") {
-        DD(8);
-        $("#" + code).hide();
-        DD(9);
-    }
-}
-BizLayer.prototype.pushHtml = function (source) {
-    $("#content").append(source);
-}
-BizLayer.prototype.setEvent = function (code) {
-
-}
-BizLayer.prototype.getJQObject = function (code) {
-    return $("#" + code);
-}
-BizLayer.prototype.saveLayerData = function () {
-    this.data = $("#contentForm").serializeArray();
-}
-BizLayer.prototype.getShowingCode = function () {
-    return $(".bizPages:visible").attr("id");
-}
-BizLayer.prototype.destory = function (code) {
+me.hidePreLayer = function (layer) {
     try {
-        $("#" + code).remove();
-        var newLayerStack = [];
-        for ( var i = 0 ; i < BizLayer.prototype.layerStack.length ; i++ ) {
-            if (BizLayer.prototype.layerStack[i] != code)
-                newLayerStack.push(BizLayer.prototype.layerStack[i]);
+        var preCode = layer.getPreCode();
+        if (typeof preCode != "undefined" && preCode != "") {
+            layer.hide(preCode);
         }
-
-        BizLayer.prototype.layerStack = newLayerStack;
     }
     catch (e) {
-        log.error("BizLayer.prototype.destory", e);
+        log.error("me.hidePreLayer", e);
     }
     finally {
-        log.debug("BizLayer.prototype.destory");
+        log.debug("me.hidePreLayer");
     }
 }
-BizLayer.prototype.getPreCode = function () {
-    return BizLayer.prototype.layerStack.pop();
+me.createLayer = function (code, type) {
+    log.debug("me.createLayer start");
+    try {
+        var newLayer;
+        if (type == "biz") {
+            newLayer = new BizLayer(code);
+        }
+        else if (type == "tbar") {
+            newLayer = new TBarLayer(code);
+        }
+        LayerPool.addLayer(newLayer);
+        var source = newLayer.getServerSource(code); // HTML 소스 가져오기
+        source = newLayer.bindInSource(source, newLayer.bindCode, code); // HTML 소스상 특정문자를 CODE로 변경
+        newLayer.pushHtml(source); // 소스화면에 적용
+        newLayer.setEvent(code);
+    }
+    catch (e) {
+        log.error("me.createLayer", e);
+    }
+    finally {
+        log.debug("me.createLayer");
+    }
 }
 
-// Layer 상속
-function TBarLayer(code) {
-    Layer.call(this, code);
-    this.type = "tbar";
-    this.bindCode = "%bizCode%";
+me.closeLayer = function (code) {
+    log.debug("me.closeLayer start");
+    try {
+        var layer = LayerPool.getLayer(code);
+        layer.destory(code);
+        this.showPreLayer(layer);
+        LayerPool.deleteLayer(code);
+    }
+    catch (e) {
+        log.error("me.closeLayer", e);
+    }
+    finally {
+        log.debug("me.closeLayer");
+    }
+
 }
-TBarLayer.prototype = new Layer();
-TBarLayer.prototype.getUrl = function (code) {
-    return "/component/taskbar.html?time=" + (new Date()).getTime();
+me.hideLayer = function (code) {
+    try {
+        var layer = LayerPool.getLayer(code);
+        layer.hide(code);
+        this.showPreLayer(layer);
+    }
+    catch (e) {
+        log.error("me.closeLayer", e);
+    }
+    finally {
+        log.debug("me.closeLayer");
+    }
+
+}
+me.getType = function (code) {
+    try {
+
+    }
+    catch (e) {
+        log.error("me.getType", e);
+    }
+    finally {
+        log.debug("me.getType");
+    }
+
+    return code;
 }
 
-TBarLayer.prototype.pushHtml = function (source) {
-    $("#tbarArea").append(source);
+me.getTitle = function (code) {
+    try {
+
+    }
+    catch (e) {
+        log.error("me.getTitle", e);
+    }
+    finally {
+        log.debug("me.getTitle");
+    }
+
+    return code;
 }
-TBarLayer.prototype.setEvent = function (code) {
-    $("#title_" + code).click(function () {
-        me.showLayer(code.replace("tbar", "biz"), "biz");
-    });
-    $("#close_" + code).click(function () {
-        DD("code", code);
-        me.closeLayer(code);
-        me.closeLayer(code.replace("tbar", "biz"), "biz");
-    });
-}
-TBarLayer.prototype.getJQObject = function (code) {
-    return $("#" + code);
-}
-TBarLayer.prototype.destory = function (code) {
-    $("#" + code).remove();
-}
-TBarLayer.prototype.show = function (layer) {
-    DD("show", layer.code);
-    $("#" + layer.code).css({backgroundColor:"#fff29d",color:"#000000"});
-}
-TBarLayer.prototype.hide = function () {
-    $(".taskbar").css({ backgroundColor: "#364e6f", color: "#ffffff" });
-}
+$(document).ajaxComplete(function () {
+    $("#status").text("Triggered ajaxComplete handler.");
+});
+$(document).ajaxError(function () {
+    $("#status").text("Error.");
+});
+
+
