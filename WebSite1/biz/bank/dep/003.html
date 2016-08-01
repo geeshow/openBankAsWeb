@@ -50,94 +50,9 @@
                         </div>
                     </p>
                 </fieldset>
-                <fieldset>
-                    <legend>showCalendar - 달력버튼 생성 예제.</legend>
-                    <span class="blockDesc">※ 생성된 달력 버튼의 ID는 접미어 '_CAL'가 추가됨. 'sample1_CAL'. 클릭시 달력 입력 상자 활성</span>
-                    <p>
-                        <div class="dataSet">
-                            <span class="inputTitle width3">showCalendar 샘플1</span>
-                            <input class="inputControll" type="text" id="sample4" value="달력" size="20" showCalendar="after" />
-                            <span class="inputDesc">오른쪽 달력 버튼 적용</span>
-                        </div>
-                        <div class="dataSet">
-                            <span class="inputTitle width3">적용 소스</span>
-                            <input class="inputControll width9" type="text" size="100" value='<input class="inputControll" type="text" id="sample4" value="달력" size="20" showCalendar="after" />' readonly />
-                        </div>
-                    </p>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">showCalendar 샘플2</span>
-                        <input class="inputControll" type="text" id="sample5" value="달력" size="20"
-                               showCalendar="before" />
-                        <span class="inputDesc">왼쪽 달력 버튼 적용</span>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>showZoom / showCalendar - 둘다적용.</legend>
-                    <span class="blockDesc">※ 같은 위치에 적용시 showZoom 버튼이 밖으로 적용 됨.</span>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">둘다적용 샘플1</span>
-                        <input class="inputControll" type="text" id="sample6" value="둘다after" size="20"
-                               showCalendar="after" showZoom="after" onZoomClick="alert(this.value);" />
-                        <span class="inputDesc">showCalendar="after" showZoom="after"</span>
-                    </div>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">둘다적용 샘플2</span>
-                        <input class="inputControll" type="text" id="sample7" value="둘다before" size="20"
-                               showCalendar="before" showZoom="before" onZoomClick="alert(this.value);" />
-                        <span class="inputDesc">showCalendar="after" showZoom="after"</span>
-                    </div>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">둘다적용 샘플3</span>
-                        <input class="inputControll" type="text" id="sample8" value="한쪽씩" size="20"
-                               showCalendar="after" showZoom="before" onZoomClick="alert(this.value);" />
-                        <span class="inputDesc">showCalendar="after" showZoom="after"</span>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>suffix - 접미어</legend>
-                    <span class="blockDesc">※ input 객체의 접미어로 단위나 속성 등을 표시. ex(원, %, $).</span>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">접미어 샘플1</span>
-                        <input class="inputControll" type="text" id="sample11" value="10,000,000" size="20"
-                               suffix="원"/>
-                        <span class="inputDesc">suffix="원"</span>
-                    </div>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">접미어 샘플2</span>
-                        <input class="inputControll" type="text" id="sample12" value="5.1" size="20"
-                               suffix="%" />
-                        <span class="inputDesc">suffix="%"</span>
-                    </div>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">접미어 샘플3</span>
-                        <input class="inputControll" type="text" id="sample13" value="긴접미어" size="20"
-                              suffix="긴접미어" />
-                        <span class="inputDesc">suffix="긴접미어"</span>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <legend>mask - 패턴</legend>
-                    <span class="blockDesc">※ X:한글자, 특수문자:적용패턴(comma,-,: 등), 마침표:소숫점표시) </span>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">접미어 샘플1</span>
-                        <input class="inputControll" type="text" id="sample21" mask="YYYY-MM-DD" value="" size="20" />
-                        <span class="inputDesc">ZZZ-ZZZ-ZZZZ</span>
-                    </div>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">접미어 샘플2</span>
-                        <input class="inputControll" type="text" id="sample22" value="5.1" size="20"
-                               suffix="%" />
-                        <span class="inputDesc">suffix="%"</span>
-                    </div>
-                    <div class="dataSet">
-                        <span class="inputTitle width3">접미어 샘플3</span>
-                        <input class="inputControll" type="text" id="sample23" value="긴접미어" size="20"
-                               suffix="긴접미어" />
-                        <span class="inputDesc">suffix="긴접미어"</span>
-                    </div>
-                </fieldset>
             </div>
         </form>
     </div>
+    <div id="info" style="width:800px;height:500px;"></div>
 </body>
 </html>

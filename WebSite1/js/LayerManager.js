@@ -2,13 +2,24 @@
 }
 me.onload = function () {
     try {
+        document.focus();
         $(".bizTreeMenu").click(function () {
             me.showLayer(this.id.replace("menu", "biz"), "biz");
             me.showLayer(this.id.replace("menu", "tbar"), "tbar");
         });
         $(".layerTopBtn").click(function (aa) {
         });
-        
+        $("body").keydown(function (e) {
+            DD(event.keyCode);
+            if (e.keyCode == 116) {
+                var preCode = BizLayer.prototype.getTopLayerCode();
+                if (preCode != "") {
+                    BizLayer.prototype.reload(preCode);
+                    event.cancelable = true;
+                    event.returnValue = false;
+                }
+            }
+        });
     }
     catch (e) {
         log.error("me.onload", e);
@@ -22,7 +33,7 @@ me.showLayer = function (code, type) {
         if (!LayerPool.isLayer(code)) {
             me.createLayer(code, type);
         }
-        
+
         var layer = LayerPool.getLayer(code);
         layer.show(layer);
     }
@@ -35,7 +46,7 @@ me.showLayer = function (code, type) {
 }
 me.showPreLayer = function (layer) {
     try {
-        var preCode = layer.getPreCode();
+        var preCode = layer.getTopLayerCode();
         if (typeof preCode != "undefined" && preCode != "") {
             this.showLayer(preCode);
         }
@@ -49,7 +60,7 @@ me.showPreLayer = function (layer) {
 }
 me.hidePreLayer = function (layer) {
     try {
-        var preCode = layer.getPreCode();
+        var preCode = layer.getTopLayerCode();
         if (typeof preCode != "undefined" && preCode != "") {
             layer.hide(preCode);
         }
@@ -142,11 +153,4 @@ me.getTitle = function (code) {
 
     return code;
 }
-$(document).ajaxComplete(function () {
-    $("#status").text("Triggered ajaxComplete handler.");
-});
-$(document).ajaxError(function () {
-    $("#status").text("Error.");
-});
-
 

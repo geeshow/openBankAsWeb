@@ -1,8 +1,13 @@
 ﻿$(document).ready(function () {
-    var bizCode = location.pathname.split(".")[0].replace(/\//g, "_");
-    bizCode = bizCode.substring(1, bizCode.length);
-    parent.document.getElementById("biz_title_" + bizCode).innerText = " - " + document.title;
-    
+    try {
+        var bizCode = location.pathname.split(".")[0].replace(/\//g, "_");
+        bizCode = bizCode.substring(1, bizCode.length);
+        parent.document.getElementById("biz_title_" + bizCode).innerText = " - " + document.title;
+    }
+    catch (e) {
+
+    }
+
     $("input[showZoom]").each(function () {
         $(this).css("width", ($(this).innerWidth() - 32) + "px");
         $(this)[$(this).attr("showZoom")]("<input class='smallBtn' type='button' id='" + $(this).attr("id") + "_ZOOM' value='@' size='5' onZoomClick='alert(this.value);' />");
@@ -54,5 +59,16 @@
             this.selectionStart = cursorIdx + cab;
             this.selectionEnd = cursorIdx + cab;
         }
+    });
+    $("body").keydown(function (e) {
+        if (e.keyCode == 116 || e.keyCode == 49) {
+            var preCode = parent.BizLayer.prototype.getTopLayerCode();
+            if (preCode != "") {
+                parent.BizLayer.prototype.reload(preCode);
+                event.cancelable = true;
+                event.returnValue = false;
+            }
+        }
+        DD(e.keyCode);
     });
 });

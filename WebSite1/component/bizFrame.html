@@ -1,7 +1,11 @@
 ﻿<div id="%bizCode%" class="bizPages">
     <div class="layerTop">
         <div id="biz_title_%bizCode%" class="layerTitle">%bizCode%</div>
-        <div id="layerBtn_%bizCode%" class="layerBtn"><a href="#" id="topHideBtn_%bizCode%" class="layerTopHideBtn" value="hide">[_]</a><a href="#" id="topCloseBtn_%bizCode%" class="layerTopCloseBtn" value="close">[X]</a></div>
+        <div id="layerBtn_%bizCode%" class="layerBtn">
+            <a href="#" id="topReloadBtn_%bizCode%" class="layerTopReloadBtn" value="reload">[R]</a>
+            <a href="#" id="topHideBtn_%bizCode%" class="layerTopHideBtn" value="hide">[_]</a>
+            <a href="#" id="topCloseBtn_%bizCode%" class="layerTopCloseBtn" value="close">[X]</a>
+        </div>
     </div>
-    <iframe src="%bizUrl%" width="1036" height="700" scrolling="yes"></iframe>
+    <iframe id="biz_frame_%bizCode%" src="%bizUrl%" width="1036" height="700" scrolling="yes"></iframe>
 </div>

@@ -1,5 +1,4 @@
-﻿var ajaxReturn = [];
-function Layer(code) {
+﻿function Layer(code) {
     this.code = code;
     this.source = "";
     this.title = code;
@@ -17,10 +16,10 @@ Layer.prototype.getServerSource = function (code) {
         , url: url
         , data: {}
         , async: false
-    }).done(function (source) {
-        ajaxReturn[this.url] = source;
+    }).done(function (getSource) {
+        source = getSource;
     });
-    return ajaxReturn[url];
+    return source;
 }
 Layer.prototype.bindInSource = function (source, bindName, value) {
     return source.replace(new RegExp(bindName, 'gi'), value);
@@ -32,7 +31,7 @@ Layer.prototype.hide = function (code) {
 Layer.prototype.saveLayerData = function () {
     return [];
 }
-Layer.prototype.getPreCode = function() {}
+Layer.prototype.getTopLayerCode = function () { }
 
 // Layer 상속
 function BizLayer(code) {
@@ -75,7 +74,7 @@ BizLayer.prototype.hide = function (code) {
         $("#" + code.replace("biz", "tbar")).css({ backgroundColor: "#364e6f", color: "#ffffff" });
     }
 }
-BizLayer.prototype.getPreCode = function (code) {
+BizLayer.prototype.getTopLayerCode = function (code) {
     preCode = "";
     maxIndex = 0;
     $(".bizPages:visible").each(function () {
@@ -94,10 +93,17 @@ BizLayer.prototype.setEvent = function (code) {
         me.hideLayer(code);
     });
     $("#topCloseBtn_" + code).click(function () {
-        DD("click", $(this).attr("id"));
         me.closeLayer(code);
         me.closeLayer(code.replace("biz", "tbar"), "tbar");
     });
+    $("#topReloadBtn_" + code).click(function () {
+        BizLayer.prototype.reload(code);
+    });
+}
+BizLayer.prototype.reload = function (code) {
+    var bizFrame = document.getElementById("biz_frame_" + code);
+    var bizFrameCon = (bizFrame.contentWindow) ? bizFrame.contentWindow : (bizFrame.contentDocument.document) ? bizFrame.contentDocument.document : bizFrame.contentDocument;
+    bizFrameCon.location.reload();
 }
 BizLayer.prototype.getJQObject = function (code) {
     return $("#" + code);
