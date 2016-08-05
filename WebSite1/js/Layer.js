@@ -1,4 +1,4 @@
-﻿function Layer(code) {
+function Layer(code) {
     this.code = code;
     this.source = "";
     this.title = code;

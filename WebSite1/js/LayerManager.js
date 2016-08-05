@@ -33,7 +33,6 @@ me.showLayer = function (code, type) {
         if (!LayerPool.isLayer(code)) {
             me.createLayer(code, type);
         }
-
         var layer = LayerPool.getLayer(code);
         layer.show(layer);
     }
@@ -153,4 +152,5 @@ me.getTitle = function (code) {
 
     return code;
 }
+
 
