@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>예금신규</title>
+    <link rel="stylesheet" href="/css/BizLayer.css">
+    <script src="/js/jquery-3.1.0.js"></script>
+    <script src="/js/Logger.js?1"></script>
+    <script src="/js/Input.js?1"></script>
+    <script src="/js/Util.js?1"></script>
+</head>
+<body>
+    <div id="%bizCode%">
+        <form id="form_%bizCode%" method="post">
+            <div class="width11">
+                <fieldset>
+                    <legend>계약사항 입력</legend>
+                    <span class="blockDesc">※고객이 작성한 계약서의 계약사항을 입력해주세요.</span>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">계약기간</span>
+                            <input class="inputControll" type="text" id="sample11" value="0" size="20" suffix="개월" />
+                            <input class="inputControll" type="text" id="sample12" value="0" size="20" suffix="일" />
+                            <span class="inputDesc">계좌의 계약기간을 입력해주세요.</span>
+                        </div>
+                    </p>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">신규금액</span>
+                            <input class="inputControll" type="text" id="sample21" value="0" size="20" suffix="원" />
+                            <span class="inputDesc">신규금액을 입력해주세요.</span>
+                        </div>
+                    </p>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">showZoom 샘플3</span>
+                            <input class="inputControll" type="text" id="sample3" value="적용" size="20" showZoom="before" onZoomClick="alert(this.value);" />
+                            <span class="inputDesc">왼쪽 돋보기 버튼 적용</span>
+                        </div>
+                    </p>
+                </fieldset>
+                <fieldset>
+                    <legend>계약 확인사항</legend>
+                    <span class="blockDesc">※ 입력된 계약사항에 의해 계산된 정보를 확인해 주세요.</span>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">계약기간</span>
+                            <input class="inputControll" type="text" id="sample41" value="20190101" Mask="YYYY-MM-DD" size="20"/>
+                            <input class="inputControll" type="text" id="sample42" value="20200101" Mask="YYYY-MM-DD" size="20"/>
+                        </div>
+                    </p>
+                    <p>
+                        <div class="dataSet">
+                            <span class="inputTitle width3">계약금액</span>
+                            <input class="inputControll" type="text" id="sample43" value="1000000" mask="ZZZ,ZZZ,ZZZ,ZZ9" size="20" suffix="원" />
+                            <span class="inputDesc">신규금액을 입력해주세요.</span>
+                        </div>
+                    </p>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+    <div id="info" style="width:800px;height:500px;"></div>
+</body>
+</html>

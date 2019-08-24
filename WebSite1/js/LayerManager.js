@@ -2,7 +2,7 @@
 }
 me.onload = function () {
     try {
-        document.focus();
+        //document.focus();
         $(".bizTreeMenu").click(function () {
             me.showLayer(this.id.replace("menu", "biz"), "biz");
             me.showLayer(this.id.replace("menu", "tbar"), "tbar");
