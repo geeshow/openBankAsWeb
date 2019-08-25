@@ -1,7 +1,7 @@
-function Layer(code) {
+function Layer(code, title) {
     this.code = code;
     this.source = "";
-    this.title = code;
+    this.title = title;
 }
 Layer.prototype.setSource = function (source) {
     this.source = source;
@@ -10,7 +10,8 @@ Layer.prototype.getTitle = function () {
     return this.title;
 }
 Layer.prototype.getServerSource = function (code) {
-    var url = this.getUrl(code);
+    var url = config.HOME + this.getUrl(code);
+    log.debug("url" + url);
     $.ajax({
         type: "GET"
         , url: url
@@ -21,8 +22,10 @@ Layer.prototype.getServerSource = function (code) {
     });
     return source;
 }
-Layer.prototype.bindInSource = function (source, bindName, value) {
-    return source.replace(new RegExp(bindName, 'gi'), value);
+Layer.prototype.bindInSource = function (source) {
+    source = source.replace(new RegExp("%bizCode%", 'gi'), this.code);
+    source = source.replace(new RegExp("%bizName%", 'gi'), this.title);
+    return source;
 }
 Layer.prototype.show = function (code) {
 }
@@ -34,10 +37,9 @@ Layer.prototype.saveLayerData = function () {
 Layer.prototype.getTopLayerCode = function () { }
 
 // Layer 상속
-function BizLayer(code) {
-    Layer.call(this, code);
+function BizLayer(code, title) {
+    Layer.call(this, code, title);
     this.type = "biz";
-    this.bindCode = "%bizUrl%";
     this.data;
     this.maxIndex = 0;
     this.preCode = "";
@@ -47,9 +49,11 @@ BizLayer.prototype.zindex = 1;
 BizLayer.prototype.getUrl = function (code) {
     return "/component/bizFrame.html?time=" + (new Date()).getTime();
 }
-BizLayer.prototype.bindInSource = function (source, bindName, value) {
-    source = source.replace(new RegExp("%bizCode%", 'gi'), value);
-    return source.replace(new RegExp(bindName, 'gi'), "/" + value.replace(/_/g, '/') + ".html");
+BizLayer.prototype.bindInSource = function (source) {
+    source = source.replace(new RegExp("%bizCode%", 'gi'), this.code);
+    source = source.replace(new RegExp("%bizName%", 'gi'), this.title);
+    source = source.replace(new RegExp("%bizUrl%", 'gi'), "/" + this.code.replace(/_/g, '/') + ".html");
+    return source;
 }
 BizLayer.prototype.show = function (layer) {
     try {
@@ -121,10 +125,9 @@ BizLayer.prototype.destory = function (code) {
 }
 
 // Layer 상속
-function TBarLayer(code) {
-    Layer.call(this, code);
+function TBarLayer(code, title) {
+    Layer.call(this, code, title);
     this.type = "tbar";
-    this.bindCode = "%bizCode%";
 }
 TBarLayer.prototype = new Layer();
 TBarLayer.prototype.getUrl = function (code) {

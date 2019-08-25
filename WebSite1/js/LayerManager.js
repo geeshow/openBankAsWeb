@@ -4,8 +4,8 @@ me.onload = function () {
     try {
         //document.focus();
         $(".bizTreeMenu").click(function () {
-            me.showLayer(this.id.replace("menu", "biz"), "biz");
-            me.showLayer(this.id.replace("menu", "tbar"), "tbar");
+            me.showLayer(this.id.replace("menu", "biz"), "biz", this.textContent);
+            me.showLayer(this.id.replace("menu", "tbar"), "tbar", this.textContent);
         });
         $(".layerTopBtn").click(function (aa) {
         });
@@ -28,10 +28,10 @@ me.onload = function () {
         log.debug("me.onload");
     }
 }
-me.showLayer = function (code, type) {
+me.showLayer = function (code, type, layerName) {
     try {
         if (!LayerPool.isLayer(code)) {
-            me.createLayer(code, type);
+            me.createLayer(code, type, layerName);
         }
         var layer = LayerPool.getLayer(code);
         layer.show(layer);
@@ -71,19 +71,20 @@ me.hidePreLayer = function (layer) {
         log.debug("me.hidePreLayer");
     }
 }
-me.createLayer = function (code, type) {
+me.createLayer = function (code, type, layerName) {
     log.debug("me.createLayer start");
     try {
         var newLayer;
         if (type == "biz") {
-            newLayer = new BizLayer(code);
+            newLayer = new BizLayer(code, layerName);
         }
         else if (type == "tbar") {
-            newLayer = new TBarLayer(code);
+            newLayer = new TBarLayer(code, layerName);
         }
         LayerPool.addLayer(newLayer);
+        log.debug("me.createLayer start code" + code);
         var source = newLayer.getServerSource(code); // HTML 소스 가져오기
-        source = newLayer.bindInSource(source, newLayer.bindCode, code); // HTML 소스상 특정문자를 CODE로 변경
+        source = newLayer.bindInSource(source); // HTML 소스상 특정문자를 CODE로 변경
         newLayer.pushHtml(source); // 소스화면에 적용
         newLayer.setEvent(code);
     }
